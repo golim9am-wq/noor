@@ -3491,12 +3491,14 @@ html.dark .lux-moon span{
 
 
 .dream-insight-body{
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
-    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
     line-height: 2.05 !important;
     font-size: 13.5px !important;
     color: var(--text) !important;
+    text-align: right !important;
+    direction: rtl !important;
 }
 .message-bubble{
     line-height: 1.95 !important;
@@ -5582,16 +5584,38 @@ setInterval(updateNextPrayerCountdown, 1000);
 
         const bodyEl = w.querySelector(".dream-insight-body");
         if(animate) typewriter(bodyEl, response.body, w);
-        else bodyEl.textContent = response.body;
+        else {
+            bodyEl.innerHTML = String(response.body)
+                .split("\n")
+                .map(line => line.trim() ? `<p style="margin:0 0 8px">${escapeHtml(line)}</p>` : "")
+                .join("");
+        }
     }
 
     function typewriter(el, text, wrapEl){
         if(!el) return;
+        const clean = String(text || "");
+        const isMobile = window.matchMedia("(max-width: 900px)").matches;
+
+        if(isMobile){
+            el.innerHTML = clean
+                .split("\n")
+                .map(line => line.trim() ? `<p style="margin:0 0 8px">${escapeHtml(line)}</p>` : "")
+                .join("");
+            if(wrapEl) wrapEl.classList.remove("bot-writing");
+            const tagsEl = wrapEl && wrapEl.querySelector(".dream-insight-tags");
+            if(tagsEl){
+                tagsEl.style.opacity = "1";
+                tagsEl.style.transform = "translateY(0)";
+            }
+            softScrollChat();
+            return;
+        }
+
         let i = 0;
         const caret = document.createElement("span");
         caret.className = "dream-caret";
         el.appendChild(caret);
-        const clean = String(text || "");
 
         function step(){
             if(i >= clean.length){
