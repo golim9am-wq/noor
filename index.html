@@ -3535,7 +3535,162 @@ html.dark .lux-moon span{
     position: relative !important;
 }
 .dream-suggestions-wrap{ display: none !important; }
+/* =========================================================
+   ALARM SYSTEM — Professional Prayer Notification
+========================================================= */
 
+.alarm-button{
+    position:relative;
+}
+.alarm-button.active{
+    background:linear-gradient(145deg, var(--green), var(--green-2));
+    color:#fff;
+    border-color:transparent;
+    box-shadow:0 8px 22px rgba(31,107,80,.28);
+}
+.alarm-button.active::after{
+    content:"";
+    position:absolute;top:6px;right:6px;
+    width:8px;height:8px;border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 3px var(--surface), 0 0 10px var(--gold);
+    animation:pulseDot 1.8s infinite;
+}
+
+.alarm-toast{
+    position:fixed;
+    top:20px;left:50%;
+    transform:translate(-50%,-140%);
+    z-index:9000;
+    min-width:320px;max-width:calc(100% - 32px);
+    padding:18px 22px;
+    border-radius:22px;
+    background:linear-gradient(145deg, var(--green), var(--green-2));
+    color:#fff;
+    box-shadow:0 25px 70px rgba(31,107,80,.4), 0 0 0 1px rgba(255,255,255,.15) inset;
+    display:flex;align-items:center;gap:14px;
+    transition:transform .55s cubic-bezier(.2,.9,.3,1.2);
+    font-weight:900;
+}
+.alarm-toast.show{ transform:translate(-50%,0); }
+.alarm-toast-icon{
+    width:46px;height:46px;flex:0 0 46px;
+    display:grid;place-items:center;
+    border-radius:15px;
+    background:rgba(255,255,255,.18);
+    font-size:22px;
+    animation:alarmPulse 1.4s ease-in-out infinite;
+}
+@keyframes alarmPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.12);}
+}
+.alarm-toast-body{flex:1;min-width:0;}
+.alarm-toast-title{
+    font-size:15px;font-weight:950;
+    margin-bottom:3px;
+    letter-spacing:-.02em;
+}
+.alarm-toast-text{
+    font-size:12px;font-weight:600;
+    opacity:.9;line-height:1.6;
+}
+.alarm-toast-close{
+    width:32px;height:32px;flex:0 0 32px;
+    display:grid;place-items:center;
+    border-radius:10px;
+    border:none;
+    background:rgba(255,255,255,.15);
+    color:#fff;font-size:14px;
+    cursor:pointer;
+    transition:background .2s;
+    font-family:Arial,sans-serif;
+}
+.alarm-toast-close:hover{ background:rgba(255,255,255,.28); }
+
+.alarm-card{
+    position:fixed;
+    inset:0;
+    z-index:8500;
+    display:none;
+    align-items:center;justify-content:center;
+    padding:20px;
+    background:rgba(5,12,9,.55);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+}
+.alarm-card.show{ display:flex; }
+
+.alarm-card-inner{
+    width:min(420px,100%);
+    padding:32px 28px 26px;
+    border-radius:30px;
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--border);
+    box-shadow:var(--shadow-heavy);
+    text-align:center;
+    animation:alarmCardIn .5s cubic-bezier(.2,.9,.3,1.2);
+}
+@keyframes alarmCardIn{
+    from{opacity:0;transform:translateY(30px) scale(.94);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+}
+.alarm-card-icon{
+    width:80px;height:80px;margin:0 auto 18px;
+    display:grid;place-items:center;
+    border-radius:26px;
+    color:#fff;font-size:36px;
+    background:linear-gradient(145deg, var(--green), var(--green-2));
+    box-shadow:0 18px 45px rgba(31,107,80,.35);
+    animation:alarmPulse 1.6s ease-in-out infinite;
+}
+.alarm-card-title{
+    font-size:22px;font-weight:950;
+    color:var(--text);
+    margin-bottom:8px;
+    letter-spacing:-.03em;
+}
+.alarm-card-text{
+    color:var(--text-2);
+    font-size:13.5px;line-height:1.9;
+    margin-bottom:22px;
+    font-weight:600;
+}
+.alarm-card-time{
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:14px;
+    background:var(--green-soft);
+    color:var(--green);
+    font-size:24px;font-weight:950;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;
+    margin-bottom:20px;
+    letter-spacing:.02em;
+}
+.alarm-card-actions{
+    display:flex;gap:10px;
+}
+.alarm-card-actions button{
+    flex:1;min-height:50px;
+    border-radius:15px;
+    font-size:14px;font-weight:900;
+}
+
+@media(max-width:520px){
+    .alarm-toast{
+        min-width:0;
+        padding:14px 16px;
+        border-radius:18px;
+    }
+    .alarm-toast-icon{ width:40px;height:40px;flex-basis:40px;font-size:19px; }
+    .alarm-toast-title{ font-size:13.5px; }
+    .alarm-toast-text{ font-size:11px; }
+    .alarm-card-inner{ padding:26px 20px 22px;border-radius:24px; }
+    .alarm-card-icon{ width:68px;height:68px;font-size:30px;border-radius:22px; }
+    .alarm-card-title{ font-size:19px; }
+    .alarm-card-time{ font-size:20px; }
+}
 </style>
 </head>
 
@@ -3590,10 +3745,11 @@ html.dark .lux-moon span{
         <div class="logo-mark">✦</div>
         <span>NOOR | نُور</span>
     </div>
-    <div class="header-actions">
-        <button class="icon-button" id="themeButton" aria-label="تغییر حالت">☾</button>
-        <button class="icon-button" id="profileButton" aria-label="پروفایل">◉</button>
-    </div>
+ <div class="header-actions">
+    <button class="icon-button alarm-button" id="alarmButton" aria-label="آلارم نماز" title="آلارم نماز">🔔</button>
+    <button class="icon-button" id="themeButton" aria-label="تغییر حالت">☾</button>
+    <button class="icon-button" id="profileButton" aria-label="پروفایل">◉</button>
+</div>
 </header>
 
 
@@ -5262,7 +5418,30 @@ setInterval(updateNextPrayerCountdown, 1000);
 
 </script>
 
+<!-- ALARM SYSTEM -->
+<div class="alarm-toast" id="alarmToast">
+    <div class="alarm-toast-icon" id="alarmToastIcon">🔔</div>
+    <div class="alarm-toast-body">
+        <div class="alarm-toast-title" id="alarmToastTitle">وقت نماز</div>
+        <div class="alarm-toast-text" id="alarmToastText">الان می‌توانی ثبت کنی</div>
+    </div>
+    <button class="alarm-toast-close" id="alarmToastClose" aria-label="بستن">✕</button>
+</div>
 
+<div class="alarm-card" id="alarmCard">
+    <div class="alarm-card-inner">
+        <div class="alarm-card-icon">🔔</div>
+        <div class="alarm-card-title" id="alarmCardTitle">وقت نماز رسید</div>
+        <div class="alarm-card-time" id="alarmCardTime">۰۰:۰۰</div>
+        <div class="alarm-card-text" id="alarmCardText">
+            وقت نماز است. با آرامش برخیز و این لحظه را به نور بسپار.
+        </div>
+        <div class="alarm-card-actions">
+            <button class="secondary-button" id="alarmSnooze">۱۰ دقیقه بعد</button>
+            <button class="primary-button" id="alarmDismiss">متوجه شدم ✦</button>
+        </div>
+    </div>
+</div>
 <script>
 /* =========================================================
    NOOR | Dream Bot — Premium Symbolic Interpreter
@@ -5714,6 +5893,373 @@ setInterval(updateNextPrayerCountdown, 1000);
 
 })();
 </script>
+<script>
+/* =========================================================
+   NOOR | Professional Prayer Alarm System
+========================================================= */
 
+(function(){
+    "use strict";
+
+    const ALARM_KEY = "NOOR_ALARM_V1";
+    const PRE_ALARM_MINUTES = 10;   // یادآور ۱۰ دقیقه قبل
+    const SNOOZE_MINUTES = 10;      // تعویق ۱۰ دقیقه
+
+    const alarmButton = document.getElementById("alarmButton");
+    const toastEl = document.getElementById("alarmToast");
+    const toastIcon = document.getElementById("alarmToastIcon");
+    const toastTitle = document.getElementById("alarmToastTitle");
+    const toastText = document.getElementById("alarmToastText");
+    const toastClose = document.getElementById("alarmToastClose");
+    const cardEl = document.getElementById("alarmCard");
+    const cardTitle = document.getElementById("alarmCardTitle");
+    const cardTime = document.getElementById("alarmCardTime");
+    const cardText = document.getElementById("alarmCardText");
+    const snoozeBtn = document.getElementById("alarmSnooze");
+    const dismissBtn = document.getElementById("alarmDismiss");
+
+    if(!alarmButton || !toastEl || !cardEl) return;
+
+    // ---------- STATE ----------
+    let alarmState = loadAlarmState();
+    let audioCtx = null;
+    let alarmLoopTimer = null;
+    let currentAlarmPrayer = null;
+    let snoozeUntil = null;
+
+    function loadAlarmState(){
+        try{
+            const raw = localStorage.getItem(ALARM_KEY);
+            if(raw){
+                const parsed = JSON.parse(raw);
+                return {
+                    enabled: !!parsed.enabled,
+                    firedToday: parsed.firedToday || {},
+                    preFiredToday: parsed.preFiredToday || {},
+                    lastDate: parsed.lastDate || ""
+                };
+            }
+        }catch(e){}
+        return { enabled:false, firedToday:{}, preFiredToday:{}, lastDate:"" };
+    }
+
+    function saveAlarmState(){
+        try{ localStorage.setItem(ALARM_KEY, JSON.stringify(alarmState)); }catch(e){}
+    }
+
+    function todayKey(){
+        const d = new Date();
+        return [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
+    }
+
+    function resetIfNewDay(){
+        const key = todayKey();
+        if(alarmState.lastDate !== key){
+            alarmState.lastDate = key;
+            alarmState.firedToday = {};
+            alarmState.preFiredToday = {};
+            saveAlarmState();
+        }
+    }
+
+    // ---------- UI ----------
+    function updateAlarmButtonUI(){
+        alarmButton.classList.toggle("active", alarmState.enabled);
+        alarmButton.textContent = alarmState.enabled ? "🔔" : "🔕";
+        alarmButton.title = alarmState.enabled ? "آلارم فعال — لمس برای خاموش کردن" : "آلارم خاموش — لمس برای روشن کردن";
+    }
+
+    // ---------- SOUND (Web Audio API) ----------
+    function ensureAudioCtx(){
+        if(audioCtx) return audioCtx;
+        try{
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if(!Ctx) return null;
+            audioCtx = new Ctx();
+        }catch(e){ audioCtx = null; }
+        return audioCtx;
+    }
+
+    function playAdhanTone(){
+        const ctx = ensureAudioCtx();
+        if(!ctx) return;
+
+        if(ctx.state === "suspended"){
+            ctx.resume().catch(()=>{});
+        }
+
+        const now = ctx.currentTime;
+
+        // three soft tones — like a gentle chime
+        const notes = [
+            { freq: 523.25, start: 0.00, dur: 0.9 },   // C5
+            { freq: 659.25, start: 0.35, dur: 0.9 },   // E5
+            { freq: 783.99, start: 0.70, dur: 1.2 },   // G5
+            { freq: 659.25, start: 1.35, dur: 0.9 },   // E5
+            { freq: 523.25, start: 1.70, dur: 1.6 }    // C5
+        ];
+
+        notes.forEach(n=>{
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(n.freq, now + n.start);
+            gain.gain.setValueAtTime(0.0001, now + n.start);
+            gain.gain.exponentialRampToValueAtTime(0.28, now + n.start + 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + n.start + n.dur);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + n.start);
+            osc.stop(now + n.start + n.dur + 0.05);
+        });
+    }
+
+    function startAlarmLoop(){
+        stopAlarmLoop();
+        playAdhanTone();
+        alarmLoopTimer = setInterval(playAdhanTone, 3500);
+    }
+
+    function stopAlarmLoop(){
+        if(alarmLoopTimer){
+            clearInterval(alarmLoopTimer);
+            alarmLoopTimer = null;
+        }
+    }
+
+    // ---------- VIBRATION ----------
+    function vibrate(pattern){
+        try{
+            if(navigator.vibrate) navigator.vibrate(pattern);
+        }catch(e){}
+    }
+
+    // ---------- BROWSER NOTIFICATION ----------
+    async function requestNotificationPermission(){
+        if(!("Notification" in window)) return false;
+        if(Notification.permission === "granted") return true;
+        if(Notification.permission === "denied") return false;
+        try{
+            const res = await Notification.requestPermission();
+            return res === "granted";
+        }catch(e){ return false; }
+    }
+
+    function showBrowserNotification(title, body){
+        try{
+            if("Notification" in window && Notification.permission === "granted"){
+                new Notification(title, {
+                    body: body,
+                    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%94%3C/text%3E%3C/svg%3E",
+                    tag: "noor-prayer-alarm",
+                    requireInteraction: true
+                });
+            }
+        }catch(e){}
+    }
+
+    // ---------- TOAST ----------
+    let toastTimer = null;
+    function showAlarmToast(icon, title, text, duration){
+        toastIcon.textContent = icon;
+        toastTitle.textContent = title;
+        toastText.textContent = text;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(()=>{
+            toastEl.classList.remove("show");
+        }, duration || 8000);
+    }
+
+    if(toastClose){
+        toastClose.addEventListener("click", ()=>{
+            toastEl.classList.remove("show");
+            clearTimeout(toastTimer);
+        });
+    }
+
+    // ---------- FULLSCREEN ALARM CARD ----------
+    function showAlarmCard(prayer){
+        currentAlarmPrayer = prayer;
+        cardTitle.textContent = `وقت نماز ${prayer.name} رسید`;
+        cardTime.textContent = faNum(prayer.time);
+        cardText.textContent = `اکنون وقت نماز ${prayer.name} است. با آرامش برخیز و این لحظه را به نور بسپار.`;
+        cardEl.classList.add("show");
+        startAlarmLoop();
+        vibrate([400, 200, 400, 200, 600]);
+        showBrowserNotification(`وقت نماز ${prayer.name}`, "الان می‌توانی نماز را ثبت کنی");
+    }
+
+    function hideAlarmCard(){
+        cardEl.classList.remove("show");
+        stopAlarmLoop();
+        try{ if(navigator.vibrate) navigator.vibrate(0); }catch(e){}
+    }
+
+    function faNum(v){ return String(v).replace(/\d/g, d=>"۰۱۲۳۴۵۶۷۸۹"[d]); }
+
+    // ---------- CORE LOGIC ----------
+    function checkAlarms(){
+        if(!alarmState.enabled) return;
+        resetIfNewDay();
+
+        if(typeof prayers === "undefined" || !Array.isArray(prayers)) return;
+        if(typeof getCityNow !== "function") return;
+
+        const now = getCityNow();
+        const nowMin = now.totalMinutes;
+
+        prayers.forEach(p=>{
+            const pMin = toMinutesSafe(p.time);
+            if(pMin === null) return;
+
+            // pre-alarm (10 min before)
+            const preMin = pMin - PRE_ALARM_MINUTES;
+            if(preMin >= 0 &&
+               nowMin === preMin &&
+               !alarmState.preFiredToday[p.id] &&
+               !alarmState.firedToday[p.id]){
+                alarmState.preFiredToday[p.id] = true;
+                saveAlarmState();
+                showAlarmToast(
+                    "⏰",
+                    `۱۰ دقیقه تا نماز ${p.name}`,
+                    "کمی آماده شو؛ وقت نماز نزدیک است.",
+                    7000
+                );
+                vibrate([120, 80, 120]);
+                showBrowserNotification(
+                    `۱۰ دقیقه تا نماز ${p.name}`,
+                    "کمی آماده شو؛ وقت نماز نزدیک است."
+                );
+            }
+
+            // main alarm
+            if(nowMin === pMin &&
+               !alarmState.firedToday[p.id] &&
+               !snoozeUntil){
+                alarmState.firedToday[p.id] = true;
+                saveAlarmState();
+                showAlarmCard(p);
+            }
+        });
+    }
+
+    function toMinutesSafe(t){
+        if(!t) return null;
+        const parts = String(t).split(":");
+        if(parts.length < 2) return null;
+        const h = Number(parts[0]);
+        const m = Number(parts[1]);
+        if(isNaN(h) || isNaN(m)) return null;
+        return h*60 + m;
+    }
+
+    // ---------- SNOOZE ----------
+    if(snoozeBtn){
+        snoozeBtn.addEventListener("click", ()=>{
+            hideAlarmCard();
+            if(currentAlarmPrayer){
+                const pName = currentAlarmPrayer.name;
+                showAlarmToast(
+                    "⏰",
+                    "۱۰ دقیقه دیگر یادآوری می‌کنم",
+                    `نماز ${pName} — با آرامش آماده شو`,
+                    5000
+                );
+                const snoozePrayer = currentAlarmPrayer;
+                setTimeout(()=>{
+                    showAlarmCard(snoozePrayer);
+                }, SNOOZE_MINUTES * 60 * 1000);
+            }
+            currentAlarmPrayer = null;
+        });
+    }
+
+    if(dismissBtn){
+        dismissBtn.addEventListener("click", ()=>{
+            hideAlarmCard();
+            currentAlarmPrayer = null;
+            showAlarmToast(
+                "✦",
+                "به نور سپرده شد",
+                "آرام باش — نُور همراه توست",
+                4000
+            );
+        });
+    }
+
+    // ---------- ENABLE / DISABLE ----------
+    alarmButton.addEventListener("click", async ()=>{
+        alarmState.enabled = !alarmState.enabled;
+
+        if(alarmState.enabled){
+            // ask for notification permission
+            const granted = await requestNotificationPermission();
+            // prime audio context with a tiny tone (user gesture)
+            ensureAudioCtx();
+            playAdhanTone();
+            vibrate([80, 40, 80]);
+
+            saveAlarmState();
+            updateAlarmButtonUI();
+
+            showAlarmToast(
+                "🔔",
+                "آلارم نماز فعال شد",
+                granted
+                    ? "وقت هر نماز، با صدا و لرزش خبردار می‌شوی"
+                    : "برای نوتیفیکیشن، اجازه مرورگر را فعال کن",
+                5000
+            );
+
+            if(!granted){
+                setTimeout(()=>{
+                    showAlarmToast(
+                        "⚠️",
+                        "نوتیفیکیشن غیرفعال است",
+                        "آلارم داخل صفحه کار می‌کند، اما برای بسته بودن مرورگر هم اجازه بده.",
+                        6500
+                    );
+                }, 2200);
+            }
+        } else {
+            stopAlarmLoop();
+            hideAlarmCard();
+            saveAlarmState();
+            updateAlarmButtonUI();
+            showAlarmToast(
+                "🔕",
+                "آلارم نماز خاموش شد",
+                "هر زمان خواستی می‌توانی دوباره روشن کنی.",
+                4000
+            );
+        }
+    });
+
+    // ---------- DAILY LOOP ----------
+    // بررسی هر ۱۵ ثانیه — سبک و بدون فشار روی مرورگر
+    setInterval(()=>{
+        checkAlarms();
+    }, 15000);
+
+    // بررسی اولیه پس از بارگذاری
+    setTimeout(checkAlarms, 3000);
+
+    // وقتی برگشت به صفحه، فوراً چک کن
+    document.addEventListener("visibilitychange", ()=>{
+        if(!document.hidden) checkAlarms();
+    });
+
+    // ---------- INIT UI ----------
+    updateAlarmButtonUI();
+
+    // اگر آلارم قبلاً فعال بود، اجازه نوتیف را دوباره چک کن
+    if(alarmState.enabled){
+        requestNotificationPermission();
+    }
+
+})();
+</script>
 </body>
 </html>
