@@ -3691,6 +3691,141 @@ html.dark .lux-moon span{
     .alarm-card-title{ font-size:19px; }
     .alarm-card-time{ font-size:20px; }
 }
+/* =========================================================
+   PLANET RINGS — Elegant orbiting ring around moons
+========================================================= */
+
+/* حلقه‌ی ماه روی ساعت (lux-moon) — قبلاً بود، حالا شیک‌تر */
+.lux-moon::before{
+    content:"";
+    position:absolute;
+    left:50%;top:50%;
+    width:130px;height:46px;
+    transform:translate(-50%,-50%) rotateX(72deg) rotateZ(0deg);
+    border:1.5px solid transparent;
+    border-top-color:rgba(225,189,112,.75);
+    border-right-color:rgba(225,189,112,.35);
+    border-bottom-color:rgba(47,138,103,.45);
+    border-left-color:rgba(47,138,103,.15);
+    border-radius:50%;
+    pointer-events:none;
+    animation:planetRingSpin 14s linear infinite;
+    box-shadow:
+        0 0 12px rgba(225,189,112,.28),
+        inset 0 0 8px rgba(225,189,112,.15);
+    filter:drop-shadow(0 0 6px rgba(225,189,112,.35));
+}
+
+/* حلقه‌ی دوم برای عمق بیشتر */
+.lux-moon::after{
+    content:"";
+    position:absolute;
+    left:50%;top:50%;
+    width:150px;height:54px;
+    transform:translate(-50%,-50%) rotateX(72deg) rotateZ(60deg);
+    border:1px solid transparent;
+    border-top-color:rgba(47,138,103,.45);
+    border-right-color:rgba(47,138,103,.15);
+    border-bottom-color:rgba(225,189,112,.30);
+    border-left-color:rgba(225,189,112,.08);
+    border-radius:50%;
+    pointer-events:none;
+    animation:planetRingSpin 22s linear infinite reverse;
+    opacity:.7;
+}
+
+@keyframes planetRingSpin{
+    from{ transform:translate(-50%,-50%) rotateX(72deg) rotateZ(0deg); }
+    to{ transform:translate(-50%,-50%) rotateX(72deg) rotateZ(360deg); }
+}
+
+/* نسخه‌ی تیره — درخشش ملایم‌تر */
+html.dark .lux-moon::before{
+    border-top-color:rgba(240,210,142,.85);
+    border-right-color:rgba(240,210,142,.40);
+    border-bottom-color:rgba(94,200,154,.50);
+    border-left-color:rgba(94,200,154,.18);
+    box-shadow:
+        0 0 16px rgba(240,210,142,.35),
+        inset 0 0 10px rgba(240,210,142,.18);
+}
+html.dark .lux-moon::after{
+    border-top-color:rgba(94,200,154,.55);
+    border-bottom-color:rgba(240,210,142,.35);
+}
+
+/* حلقه‌ی ماه آسمان نُور (sky-moon) — شیک و درخشان */
+.sky-moon{
+    position:absolute;
+    /* موقعیت قبلی حفظ شود */
+}
+
+.sky-moon::before{
+    content:"";
+    position:absolute;
+    left:50%;top:50%;
+    width:150px;height:52px;
+    transform:translate(-50%,-50%) rotateX(74deg) rotateZ(0deg);
+    border:1.5px solid transparent;
+    border-top-color:rgba(240,210,142,.70);
+    border-right-color:rgba(240,210,142,.28);
+    border-bottom-color:rgba(94,200,154,.40);
+    border-left-color:rgba(94,200,154,.12);
+    border-radius:50%;
+    pointer-events:none;
+    animation:planetRingSpin 16s linear infinite;
+    box-shadow:
+        0 0 18px rgba(240,210,142,.30),
+        inset 0 0 10px rgba(240,210,142,.15);
+    filter:drop-shadow(0 0 8px rgba(240,210,142,.35));
+    z-index:5;
+}
+
+.sky-moon::after{
+    content:"";
+    position:absolute;
+    left:50%;top:50%;
+    width:170px;height:60px;
+    transform:translate(-50%,-50%) rotateX(74deg) rotateZ(45deg);
+    border:1px solid transparent;
+    border-top-color:rgba(94,200,154,.40);
+    border-right-color:rgba(94,200,154,.12);
+    border-bottom-color:rgba(240,210,142,.28);
+    border-left-color:rgba(240,210,142,.06);
+    border-radius:50%;
+    pointer-events:none;
+    animation:planetRingSpin 26s linear infinite reverse;
+    opacity:.65;
+    z-index:5;
+}
+
+/* موبایل — اندازه‌ی مناسب */
+@media(max-width:900px){
+    .lux-moon::before{
+        width:96px;height:34px;
+        border-width:1.2px;
+    }
+    .lux-moon::after{
+        width:110px;height:40px;
+    }
+    .sky-moon::before{
+        width:110px;height:38px;
+        border-width:1.2px;
+    }
+    .sky-moon::after{
+        width:125px;height:44px;
+    }
+}
+
+/* وقتی انیمیشن‌ها کم‌اثر خواسته شده، حلقه‌ها ثابت بمانند */
+@media(prefers-reduced-motion:reduce){
+    .lux-moon::before,
+    .lux-moon::after,
+    .sky-moon::before,
+    .sky-moon::after{
+        animation:none !important;
+    }
+}
 </style>
 </head>
 
